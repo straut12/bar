@@ -1,0 +1,441 @@
+[
+    {
+        "id": "2482c51f894809ec",
+        "type": "tab",
+        "label": "Flow 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "982196c4c4967019",
+        "type": "function",
+        "z": "2482c51f894809ec",
+        "name": "SELECT",
+        "func": "var base = flow.get('base')\nif (typeof base == \"undefined\")\n    base = '';\n\nvar newMsg = {\n\"topic\" : \"SELECT Name, Base, Mixers FROM `cocktails`.`drinks` WHERE Base LIKE '%\" + base + \"%' AND Mixers LIKE '%\" + msg.payload + \"%';\"\n}\nreturn newMsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 140,
+        "wires": [
+            [
+                "8eefa2c0850b2394",
+                "cc17b2f933f7ddc9"
+            ]
+        ]
+    },
+    {
+        "id": "8eefa2c0850b2394",
+        "type": "mysql",
+        "z": "2482c51f894809ec",
+        "mydb": "a3187512f5b16f6a",
+        "name": "",
+        "x": 660,
+        "y": 140,
+        "wires": [
+            [
+                "2d264e27792f8fc6"
+            ]
+        ]
+    },
+    {
+        "id": "cb5451ed3a35ad3d",
+        "type": "debug",
+        "z": "2482c51f894809ec",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "2d264e27792f8fc6",
+        "type": "ui_table",
+        "z": "2482c51f894809ec",
+        "group": "478f85757df9cc29",
+        "name": "",
+        "order": 3,
+        "width": "6",
+        "height": "4",
+        "columns": [],
+        "outputs": 1,
+        "cts": true,
+        "x": 810,
+        "y": 140,
+        "wires": [
+            [
+                "a2c80e3726454b3e"
+            ]
+        ]
+    },
+    {
+        "id": "241e5a82b5954aba",
+        "type": "ui_text",
+        "z": "2482c51f894809ec",
+        "group": "478f85757df9cc29",
+        "order": 4,
+        "width": "6",
+        "height": "3",
+        "name": "",
+        "label": "Cocktail",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 920,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "5b2c0ae2266c550e",
+        "type": "ui_dropdown",
+        "z": "2482c51f894809ec",
+        "name": "Mixers",
+        "label": "Mixer",
+        "tooltip": "",
+        "place": "any",
+        "group": "478f85757df9cc29",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "any",
+                "value": "any",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "OJ",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Coke",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Lime",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Lemon",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Honey",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Ginger",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Vermouth",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Maraschino",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Chartreuse",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Orange Liq",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Mint",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Apple",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Coffee",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "St Germain",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Campari",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 190,
+        "y": 140,
+        "wires": [
+            [
+                "20fc4f9088648d48"
+            ]
+        ]
+    },
+    {
+        "id": "a2c80e3726454b3e",
+        "type": "function",
+        "z": "2482c51f894809ec",
+        "name": "format",
+        "func": "var pTopic = msg.topic.split(\"/\");\nmsg.payload = msg.payload[\"Name\"] + \": Mix \" + msg.payload[\"Base\"] + \" with \" + msg.payload[\"Mixers\"];\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 140,
+        "wires": [
+            [
+                "241e5a82b5954aba"
+            ]
+        ]
+    },
+    {
+        "id": "cc17b2f933f7ddc9",
+        "type": "debug",
+        "z": "2482c51f894809ec",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "f1ccbf2c1c6b3e5e",
+        "type": "ui_dropdown",
+        "z": "2482c51f894809ec",
+        "name": "Base",
+        "label": "Base Liquor",
+        "tooltip": "",
+        "place": "any",
+        "group": "478f85757df9cc29",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "any",
+                "value": "any",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Gin",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Rum",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Whiskey",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Vodka",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Tequila",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Scotch",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Rye",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Coffee",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Wine",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 70,
+        "y": 80,
+        "wires": [
+            [
+                "d17ad14004a2f3de"
+            ]
+        ]
+    },
+    {
+        "id": "20fc4f9088648d48",
+        "type": "function",
+        "z": "2482c51f894809ec",
+        "name": "Mixers",
+        "func": "if (msg.payload == \"any\")\n    msg.payload = '';\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 140,
+        "wires": [
+            [
+                "982196c4c4967019"
+            ]
+        ]
+    },
+    {
+        "id": "fe1231ae3b753b3b",
+        "type": "change",
+        "z": "2482c51f894809ec",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "base",
+                "pt": "flow",
+                "to": "Rum",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 90,
+        "y": 40,
+        "wires": [
+            [
+                "f1ccbf2c1c6b3e5e"
+            ]
+        ]
+    },
+    {
+        "id": "ffab687e6068bec6",
+        "type": "change",
+        "z": "2482c51f894809ec",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "base",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 80,
+        "wires": [
+            [
+                "5b2c0ae2266c550e",
+                "cb5451ed3a35ad3d"
+            ]
+        ]
+    },
+    {
+        "id": "d17ad14004a2f3de",
+        "type": "function",
+        "z": "2482c51f894809ec",
+        "name": "any",
+        "func": "\nif (msg.payload == \"any\")\n    msg.payload = '';\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 80,
+        "wires": [
+            [
+                "ffab687e6068bec6"
+            ]
+        ]
+    },
+    {
+        "id": "a3187512f5b16f6a",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "cocktails",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "478f85757df9cc29",
+        "type": "ui_group",
+        "name": "Drinks",
+        "tab": "189930591d2b8651",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "189930591d2b8651",
+        "type": "ui_tab",
+        "name": "Bar",
+        "icon": "dashboard",
+        "order": 5,
+        "disabled": false,
+        "hidden": false
+    }
+]
