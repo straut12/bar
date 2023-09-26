@@ -2,7 +2,7 @@
     {
         "id": "2482c51f894809ec",
         "type": "tab",
-        "label": "Flow 4",
+        "label": "Bar",
         "disabled": false,
         "info": "",
         "env": []
@@ -12,7 +12,7 @@
         "type": "function",
         "z": "2482c51f894809ec",
         "name": "SELECT",
-        "func": "var base = flow.get('base')\nif (typeof base == \"undefined\")\n    base = '';\n\nvar newMsg = {\n\"topic\" : \"SELECT Name, Base, Mixers FROM `cocktails`.`drinks` WHERE Base LIKE '%\" + base + \"%' AND Mixers LIKE '%\" + msg.payload + \"%';\"\n}\nreturn newMsg;\n",
+        "func": "var base = flow.get('base')\nvar mixer = flow.get('mixer')\nif (typeof base == \"undefined\" || base == \"any\")\n    base = '';\n\nif (typeof mixer == \"undefined\" || mixer == \"any\")\n    mixer = '';\n\nvar newMsg = {\n\"topic\" : \"SELECT Name, Base, Mixers FROM `cocktails`.`drinks` WHERE Base LIKE '%\" + base + \"%' AND Mixers LIKE '%\" + mixer + \"%';\"\n}\nreturn newMsg;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -23,7 +23,7 @@
         "wires": [
             [
                 "8eefa2c0850b2394",
-                "cc17b2f933f7ddc9"
+                "5e7919b8650ec83c"
             ]
         ]
     },
@@ -46,7 +46,7 @@
         "type": "debug",
         "z": "2482c51f894809ec",
         "name": "debug 3",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -194,11 +194,11 @@
         "topic": "topic",
         "topicType": "msg",
         "className": "",
-        "x": 190,
-        "y": 140,
+        "x": 70,
+        "y": 200,
         "wires": [
             [
-                "20fc4f9088648d48"
+                "816e9963d87d496a"
             ]
         ]
     },
@@ -220,22 +220,6 @@
                 "241e5a82b5954aba"
             ]
         ]
-    },
-    {
-        "id": "cc17b2f933f7ddc9",
-        "type": "debug",
-        "z": "2482c51f894809ec",
-        "name": "debug 4",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 680,
-        "y": 200,
-        "wires": []
     },
     {
         "id": "f1ccbf2c1c6b3e5e",
@@ -316,52 +300,6 @@
         ]
     },
     {
-        "id": "20fc4f9088648d48",
-        "type": "function",
-        "z": "2482c51f894809ec",
-        "name": "Mixers",
-        "func": "if (msg.payload == \"any\")\n    msg.payload = '';\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 330,
-        "y": 140,
-        "wires": [
-            [
-                "982196c4c4967019"
-            ]
-        ]
-    },
-    {
-        "id": "fe1231ae3b753b3b",
-        "type": "change",
-        "z": "2482c51f894809ec",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "base",
-                "pt": "flow",
-                "to": "Rum",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 90,
-        "y": 40,
-        "wires": [
-            [
-                "f1ccbf2c1c6b3e5e"
-            ]
-        ]
-    },
-    {
         "id": "ffab687e6068bec6",
         "type": "change",
         "z": "2482c51f894809ec",
@@ -384,8 +322,8 @@
         "y": 80,
         "wires": [
             [
-                "5b2c0ae2266c550e",
-                "cb5451ed3a35ad3d"
+                "cb5451ed3a35ad3d",
+                "982196c4c4967019"
             ]
         ]
     },
@@ -405,6 +343,85 @@
         "wires": [
             [
                 "ffab687e6068bec6"
+            ]
+        ]
+    },
+    {
+        "id": "e6449c2cea3c9f1b",
+        "type": "debug",
+        "z": "2482c51f894809ec",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "5e7919b8650ec83c",
+        "type": "debug",
+        "z": "2482c51f894809ec",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "816e9963d87d496a",
+        "type": "function",
+        "z": "2482c51f894809ec",
+        "name": "any",
+        "func": "\nif (msg.payload == \"any\")\n    msg.payload = '';\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 200,
+        "wires": [
+            [
+                "fc04f7eedc35e23b"
+            ]
+        ]
+    },
+    {
+        "id": "fc04f7eedc35e23b",
+        "type": "change",
+        "z": "2482c51f894809ec",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "mixer",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 200,
+        "wires": [
+            [
+                "982196c4c4967019",
+                "e6449c2cea3c9f1b"
             ]
         ]
     },
